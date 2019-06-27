@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Editors
+.idea
+.vscode
+*.iml
+
+# OS generated
+.DS_Store
