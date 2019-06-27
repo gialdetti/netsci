@@ -2,10 +2,20 @@
 Analyzing Complex Networks with Python
 
 
+|    Author    |                 Version                  |                   Demo                   |
+| :----------: | :--------------------------------------: | :--------------------------------------: |
+| Gialdetti | [![PyPI](https://img.shields.io/pypi/v/netsci.svg)](https://pypi.org/project/netsci/) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnotebooks%2Fnetwork_motifs.ipynb) |
+
+
 netsci is a python package for efficient statistical analysis of spatially-embedded networks. In addition, it offers efficient implementations of motif counting algorithms.
 For other models and metrics, we highly recommend using existing and richer tools. Noteworthy packages are the magnificent [NetworkX](https://networkx.github.io), [graph-tool](https://graph-tool.skewed.de) or [Brain Connectivity Toolbox](https://sites.google.com/site/bctnet/).
 
-## Simple example
+## Installing
+Install and update using [pip](https://pip.pypa.io/en/stable/quickstart/):
+```bash
+$ pip install netsci
+```
+## A simple example
 Analyzing a star network (of four nodes)
 
 ```python
@@ -32,6 +42,6 @@ Analyzing a star network (of four nodes)
 
 ## Testing
 After installation, you can launch the test suite:
-```python
+```bash
 $ pytest
 ```
