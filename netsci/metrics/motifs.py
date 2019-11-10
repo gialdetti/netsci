@@ -1,6 +1,7 @@
 __author__ = 'gialdetti'
 
 import itertools
+from operator import itemgetter
 
 import numpy as np
 import networkx as nx
@@ -172,13 +173,13 @@ def _motifs_with_participation(A):
                 w = u_nbrs[k]
                 tag = tags[Auv, A[u, w], A[v, w]]
                 f[tag[0]] += 1
-                participants[tag[0]].append(np.array([u,v,w])[tag[1:]])
+                participants[tag[0]].append(itemgetter(*tag[1:])([u,v,w]))
 
             v_nbrs = set(g.neighbors(v)) - u_nbrs_set
             for w in v_nbrs:
                 tag = tags[Auv, A[u, w], A[v, w]]
                 f[tag[0]] += 1
-                participants[tag[0]].append(np.array([u,v,w])[tag[1:]])
+                participants[tag[0]].append(itemgetter(*tag[1:])([u,v,w]))
 
     f[0:3] = -1
     participants = [np.array(p, np.int).tolist() for p in participants]
