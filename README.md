@@ -4,7 +4,7 @@ Analyzing Complex Networks with Python
 
 |    Author    |                 Version                  |                   Demo                   |
 | :----------: | :--------------------------------------: | :--------------------------------------: |
-| Gialdetti | [![PyPI](https://img.shields.io/pypi/v/netsci.svg)](https://pypi.org/project/netsci/) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnotebooks%2Fnetwork_motifs.ipynb) |
+| Gialdetti | [![PyPI](https://img.shields.io/pypi/v/netsci.svg)](https://pypi.org/project/netsci/) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) |
 
 
 netsci is a python package for efficient statistical analysis of spatially-embedded networks. In addition, it offers efficient implementations of motif counting algorithms.
@@ -15,6 +15,7 @@ Install and update using [pip](https://pip.pypa.io/en/stable/quickstart/):
 ```bash
 $ pip install netsci
 ```
+
 ## A simple example
 Analyzing a star network (of four nodes)
 
@@ -45,3 +46,33 @@ After installation, you can launch the test suite:
 ```bash
 $ pytest
 ```
+
+
+## Help and Support
+
+### Examples
+
+|     Theme    |                 MyBinder                  |
+| ------------ | :---------------------------------------: |
+| Basic network motifs demo | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) |    
+| Connectomics dataset, and 3-neuron motif embedding | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb)
+
+
+### Communication
+Please send any questions you might have about the code and/or the algorithm to <eyal.gal@mail.huji.ac.il>.
+
+
+### Citation
+If you use `netsci` in a scientific publication, please consider citing the following paper:
+
+> Gal, E., Perin, R., Markram, H., London, M., and Segev, I. (2019). [Neuron Geometry Underlies a Universal Local Architecture in Neuronal Networks.](https://doi.org/10.1101/656058) BioRxiv 656058.
+
+Bibtex entry:
+
+    @article {Gal2019
+        author = {Gal, Eyal and Perin, Rodrigo and Markram, Henry and London, Michael and Segev, Idan},
+        title = {Neuron Geometry Underlies a Universal Local Architecture in Neuronal Networks},
+        year = {2019},
+        doi = {10.1101/656058},
+        journal = {bioRxiv}
+    }

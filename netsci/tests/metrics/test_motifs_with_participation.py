@@ -38,7 +38,7 @@ def test_a_single_pattern_permuations():
 
         r, g, b = [np.where(np.array(permutation)==i)[0][0] for i in [1,2,3]]
         print("(R=%d, G=%d, B=%d) vs. participation=%s\n" % (r, g, b, participation[tid][0]))
-        npt.assert_equal(participation[tid][0], [r, g, b])
+        npt.assert_array_equal(participation[tid][0], [r, g, b])
 
 
 def test_geometrical_network():
