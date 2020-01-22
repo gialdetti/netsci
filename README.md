@@ -52,10 +52,10 @@ $ pytest
 
 ### Examples
 
-|     Theme    |                 MyBinder                  |
-| ------------ | :---------------------------------------: |
-| Basic network motifs demo | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) |    
-| Connectomics dataset, and 3-neuron motif embedding | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb)
+|     Theme    |   MyBinder   | Colab |
+| ------------ | :----------: | :---: |
+| Basic network motifs demo | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) | |    
+| Connectomics dataset, and 3-neuron motif embedding | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) |
 
 
 ### Communication
