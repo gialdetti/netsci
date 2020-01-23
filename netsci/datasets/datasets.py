@@ -37,7 +37,7 @@ def load_connectome(adjacency=False):
     References
     --------
     * Markram, H., Muller, E., Ramaswamy, S., Reimann, M.W., Abdellah, M., Sanchez, C.A., et al. (2015). Reconstruction
-      and Simulation of Neocortical Microcircuitry. Cell 163, 456–492.
+      and Simulation of Neocortical Microcircuitry. Cell 163, 456-492.
 
     """
 
