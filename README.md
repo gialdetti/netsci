@@ -54,8 +54,8 @@ $ pytest
 
 |     Theme    |   MyBinder   | Colab |
 | ------------ | :----------: | :---: |
-| Basic network motifs demo | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) | |    
-| Connectomics dataset, and 3-neuron motif embedding | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) |
+| [Basic network motifs demo](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) | |    
+| [Connectomics dataset, and 3-neuron motif embedding](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) |
 
 
 ### Communication
