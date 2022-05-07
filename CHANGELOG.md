@@ -25,7 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples: Interactive example for motif analysis, **"Basic network motifs demo"**
 - DOC: README file
 
-[unreleased]: https://github.com/gialdetti/netsci/compare/e125f30...HEAD
-[0.0.3]: https://github.com/gialdetti/netsci/compare/e125f30...HEAD
+[unreleased]: https://github.com/gialdetti/netsci/compare/b2461e9...HEAD
+[0.0.3]: https://github.com/gialdetti/netsci/compare/e125f30...b2461e9
 [0.0.2]: https://github.com/gialdetti/netsci/compare/47b6e57...e125f30
 [0.0.1]: https://github.com/gialdetti/netsci/compare/66d620b...47b6e57
+
