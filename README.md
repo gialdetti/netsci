@@ -20,35 +20,36 @@ $ pip install netsci
 Analyzing a star network (of four nodes)
 
 ```python
->>> import numpy as np
->>> import netsci.visualization as nsv
->>> A = np.array([[0,1,1,1], [0,0,0,0], [0,0,0,0], [0,0,0,0]])
->>> nsv.plot_directed_network(A, pos=[[0,0],[-1,1],[1,1],[0,-np.sqrt(2)]])
+import numpy as np
+import netsci.visualization as nsv
+
+A = np.array([[0,1,1,1], [0,0,0,0], [0,0,0,0], [0,0,0,0]])
+nsv.plot_directed_network(A, pos=[[0,0],[-1,1],[1,1],[0,-np.sqrt(2)]])
 ```
 ![Alt text](./examples/images/star4_network.png)
 
 
 ```python
->>> import netsci.metrics.motifs as nsm
->>> f = nsm.motifs(A, algorithm='brute-force')
->>> print(f)
-[1 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0]
+import netsci.metrics.motifs as nsm
+f = nsm.motifs(A, algorithm='brute-force')
+print(f)
+# [1 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0]
 ```
 
 ```python
->>> nsv.bar_motifs(f)
+nsv.bar_motifs(f)
 ```
 ![Alt text](examples/images/star4_motifs.png)
 
 Using GPU for the motif counting is easy
 ```python
->>> from netsci.models.random import erdos_renyi
+from netsci.models.random import erdos_renyi
 
->>> A_er = erdos_renyi(n=1000, p=0.01, random_state=71070)  # Create Erdős–Rényi network
->>> nsm.motifs(A_er, algorithm='gpu')                       # Count motifs using a GPU
-[156453141   9481653     37283     95997     47667     48287      1001
-       843       769       334         2         9         5         9
-         0         0]
+A_er = erdos_renyi(n=1000, p=0.01, random_state=71070)    # Create an Erdős–Rényi network
+f_er = nsm.motifs(A_er, algorithm='gpu')                  # Count motifs using a GPU
+print(f_er)
+# [156453141   9481653     37283     95997     47667     48287      1001       843
+#        769       334         2         9         5         9         0         0]
 ```
 
 ## Testing

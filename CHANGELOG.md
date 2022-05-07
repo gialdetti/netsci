@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   **"Connectomics dataset, and 3-neuron motif embedding"**
 - DOC: Update README file
 
-## [0.0.1] - 2020-05-19
+## [0.0.1] - 2019-06-27
 ### Added
 - API: Motif analysis algorithms
 - API: Motif visualization plots
