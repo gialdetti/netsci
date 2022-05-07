@@ -1,4 +1,3 @@
-import logging
 import warnings
 
 import numpy as np
@@ -32,21 +31,24 @@ def test_consistency_with_bb():
         warnings.warn('The bbpy package cannot be imported. Skipping test!', ImportWarning)
         return
 
-    connectome = load_connectome(adjacency=True)
-    neurons, synapses, A, W = connectome['nodes'], connectome['edges'], connectome['A'], connectome['W']
+    celltypes_keys = [('L5_TTPC', 'L5_TTPC2'), ('L6_LBC', 'L6_LBC')]
 
-    hcid, structural, cell_type = 2, False, 'L5_TTPC2'
-    subpopulation = Cluster.get(cell_type)
-    logging.info('Cluster: %s' % subpopulation.title)
+    for celltype, bb_celltype in celltypes_keys:
+        connectome = load_connectome(celltype=celltype, adjacency=True)
+        neurons, synapses, A, W = connectome['nodes'], connectome['edges'], connectome['A'], connectome['W']
 
-    bb = BBModelInstance(hcid)
-    W0 = bb.cmat(subpopulation, subpopulation).todense()
-    A0 = (W0!=0).astype(np.int8)
-    pos = bb.coords(subpopulation)
-    gids = bb.gids(subpopulation)
+        hcid, structural = 2, False
+        subpopulation = Cluster.get(bb_celltype)
+        print('Cluster: %s' % subpopulation.title)
 
-    logging.info(f'{subpopulation.name} connectivity: {A.shape[0]}x{A.shape[1]}')
+        bb = BBModelInstance(hcid)
+        W0 = bb.cmat(subpopulation, subpopulation).todense()
+        A0 = (W0!=0).astype(np.int8)
+        pos = bb.coords(subpopulation)
+        gids = bb.gids(subpopulation)
 
-    npt.assert_array_equal(A0, A)
-    npt.assert_array_equal(W0, W)
+        print(f'{subpopulation.name} connectivity: {A.shape[0]}x{A.shape[1]}')
+
+        npt.assert_array_equal(A0, A)
+        npt.assert_array_equal(W0, W)
     
