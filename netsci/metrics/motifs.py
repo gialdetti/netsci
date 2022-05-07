@@ -183,7 +183,7 @@ def _motifs_with_participation(A):
                 participants[tag[0]].append(itemgetter(*tag[1:])([u,v,w]))
 
     f[0:3] = -1
-    participants = [np.array(p, np.int).tolist() for p in participants]
+    participants = [np.array(p, np.int64).tolist() for p in participants]
     return f, participants
 
 
@@ -296,7 +296,7 @@ def triad_classification_tree():
         return np.array([row[order] for row in X[order]])
     motifs = triad_patterns()
 
-    tags = -1*np.ones(shape=(4,4,4), dtype=np.int)
+    tags = -1*np.ones(shape=(4,4,4), dtype=np.int64)
     permutations = list(itertools.permutations(range(3), 3))
     for i in range(len(motifs)):
         motif = motifs[i]
@@ -314,7 +314,7 @@ def triad_classification_tree_with_participation():
         return np.array([row[order] for row in X[order]])
     motifs = triad_patterns()
 
-    tags = -1*np.ones(shape=(4,4,4,4), dtype=np.int)
+    tags = -1*np.ones(shape=(4,4,4,4), dtype=np.int64)
     permutations = list(itertools.permutations(range(3), 3))
     permutations = [(p, np.argsort(p)) for p in permutations]
     for i in range(len(motifs)):

@@ -47,6 +47,7 @@ from netsci.models.random import erdos_renyi
 
 A_er = erdos_renyi(n=1000, p=0.01, random_state=71070)    # Create an Erdős–Rényi network
 f_er = nsm.motifs(A_er, algorithm='gpu')                  # Count motifs using a GPU
+
 print(f_er)
 # [156453141   9481653     37283     95997     47667     48287      1001       843
 #        769       334         2         9         5         9         0         0]

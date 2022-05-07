@@ -1,0 +1,20 @@
+# Core
+numpy==1.22.3
+pandas==1.4.2
+networkx==2.8
+scikit-learn==1.0.2
+
+# Visualization
+matplotlib==3.5.2
+seaborn==0.11.2
+
+# IDE
+notebook==6.4.11
+ipywidgets==7.7.0
+
+# Testing
+pytest==7.1.2
+
+# Publishing
+wheel==0.37.1
+twine==4.0.0

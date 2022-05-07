@@ -17,10 +17,10 @@ def test_a_single_pattern_permuations():
     M = nsm.triad_patterns()[tid]
     # plot_a_triad(M, r=.5)
 
-    A = np.zeros(shape=(5, 5), dtype=np.int)
+    A = np.zeros(shape=(5, 5), dtype=np.int64)
     A[1:4, 1:4] = M
 
-    expected_f = np.eye(16, dtype=np.int)[tid]
+    expected_f = np.eye(16, dtype=np.int64)[tid]
     for permutation in itertools.permutations(range(5), 5):
         print("# permutation:", permutation)
         perm_B = permute_array(A, permutation)
