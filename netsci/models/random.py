@@ -1,8 +1,8 @@
 import numpy as np
 
 
-def erdos_renyi(n, p):
-    """Creates a directed Erdős–Rényi random network
+def erdos_renyi(n, p, random_state=None):
+    """Creates a directed Erdős-Rényi random network
 
     Parameters
     ----------
@@ -27,14 +27,15 @@ def erdos_renyi(n, p):
     #       Xij ~ Bernoulli(p)
     #
     # Note: related to Max-Ent / ERGM constrained by E_X[f(X)]=p, where f(X):=E_Xij[Xij]
+    rng = np.random.default_rng(random_state)
 
-    A = np.random.binomial(1, p, size=(n, n))
+    A = rng.binomial(1, p, size=(n, n))
     np.fill_diagonal(A, 0)
     return A
 
 
 def erdos_renyi_reciprocal(n, p, r):
-    """Creates a directed Erdős–Rényi-like random network extended with a reciprocity constraint
+    """Creates a directed Erdős-Rényi-like random network extended with a reciprocity constraint
 
     Parameters
     ----------
@@ -75,10 +76,10 @@ def erdos_renyi_reciprocal(n, p, r):
 
     p_recip = r
     p_uni = p - r
-    p_none = 1 - 2*p_uni - p_recip
+    p_none = 1 - 2 * p_uni - p_recip
 
-    Y = np.triu(np.random.choice(4, size=(n, n), p=[p_none, p_uni, p_uni, p_recip]),1)
-    A_bi = np.int8(Y==3)
-    A = np.int8(Y==1) + np.int8(Y.T==2) + (A_bi + A_bi.T)
+    Y = np.triu(np.random.choice(4, size=(n, n), p=[p_none, p_uni, p_uni, p_recip]), 1)
+    A_bi = np.int8(Y == 3)
+    A = np.int8(Y == 1) + np.int8(Y.T == 2) + (A_bi + A_bi.T)
 
     return A

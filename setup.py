@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
 
-requirements = ["numpy>=1.16.2", "pandas>=0.24.2", "matplotlib>=3.0.3", "seaborn>=0.9.0", "networkx>=2.2"]
+requirements = ["numpy>=1.16.2", "pandas>=0.24.2", "networkx>=2.2", "scikit-learn"]
 
 setup(
     name="netsci",
@@ -19,7 +19,7 @@ setup(
     include_package_data=True,
     # package_data={'datasets': ['netsci/resources/datasets/*']},
     classifiers=[
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     ],
 )

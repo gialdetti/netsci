@@ -2,8 +2,8 @@
 Analyzing Complex Networks with Python
 
 
-|    Author    |                 Version                  |                   Demo                   |
-| :----------: | :--------------------------------------: | :--------------------------------------: |
+|  Author   |                                        Version                                        |                                                                     Demo                                                                      |
+| :-------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: |
 | Gialdetti | [![PyPI](https://img.shields.io/pypi/v/netsci.svg)](https://pypi.org/project/netsci/) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) |
 
 
@@ -40,6 +40,16 @@ Analyzing a star network (of four nodes)
 ```
 ![Alt text](examples/images/star4_motifs.png)
 
+Using GPU for the motif counting is easy
+```python
+>>> from netsci.models.random import erdos_renyi
+
+>>> A_er = erdos_renyi(n=1000, p=0.01, random_state=71070)  # Create Erdős–Rényi network
+>>> nsm.motifs(A_er, algorithm='gpu')                       # Count motifs using a GPU
+[156453141   9481653     37283     95997     47667     48287      1001
+       843       769       334         2         9         5         9
+         0         0]
+```
 
 ## Testing
 After installation, you can launch the test suite:
@@ -52,9 +62,9 @@ $ pytest
 
 ### Examples
 
-|     Theme    |   MyBinder   | Colab |
-| ------------ | :----------: | :---: |
-| [Basic network motifs demo](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) | |    
+| Theme                                                                                                                                                      |                                                                          MyBinder                                                                           |                                                                                              Colab                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [Basic network motifs demo](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb)                                        |        [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb)        |                                                                                                                                                                                                 |
 | [Connectomics dataset, and 3-neuron motif embedding](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) |
 
 

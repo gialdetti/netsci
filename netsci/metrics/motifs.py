@@ -1,11 +1,14 @@
 __author__ = 'gialdetti'
 
+import logging
 import itertools
 from operator import itemgetter
 
 import numpy as np
 import networkx as nx
 
+
+logger = logging.getLogger(__name__)
 
 def sparsity(A):
     """The marginal probability for a connection
@@ -66,6 +69,9 @@ def motifs(A, algorithm='louzoun', participation=False):
           but it counts all 16 triplets.
         * 'louzoun' - an efficient algorithm for sparse networks. The complexity is low (O(|E|)), but it counts only the 13
           connected triplets (the first 3 entries will be -1).
+        * `matmul` - a matrix multiplications computation of motifs. The complexity is (O(|V|^3)), but it is open to the low-level 
+          optimizations of the underlying library implementing the matrix multiplication (also it counts all 16 triplets).
+        * `gpu` - same as `matmul` but performed on GPU for further optimization.
     participation : bool, default: False
         If True, then all unique instances of motifs will be kept during analysis.
         Otherwise (default), this step will be avoided and list will not be returned.
@@ -94,17 +100,12 @@ def motifs(A, algorithm='louzoun', participation=False):
       Science (80). 298, 824-827.
 
     """
-
-    impls = {
-        False: {'louzoun': _motifs, 'brute-force': _motifs_naive},
-        True: {'louzoun' : _motifs_with_participation}
-    }
     try:
-        return impls[participation][algorithm](A)
-    except KeyError as error:
+        return motif_implementations[participation][algorithm](A)
+    except KeyError:
         if not type(participation)==bool:
             raise TypeError(f'participation must boolean')
-        raise ValueError(f'algorithm must be from {list(impls[participation].keys())}, got \'{algorithm}\'')
+        raise ValueError(f'algorithm must be from {list(motif_implementations[participation].keys())}, got \'{algorithm}\'')
 
 
 def _motifs_naive(A):
@@ -184,6 +185,19 @@ def _motifs_with_participation(A):
     f[0:3] = -1
     participants = [np.array(p, np.int).tolist() for p in participants]
     return f, participants
+
+
+motif_implementations = {
+    False: {'louzoun': _motifs, 'brute-force': _motifs_naive},
+    True: {'louzoun' : _motifs_with_participation}
+}
+
+try:
+    from .motifs_gpu import _motifs_gpu
+    motif_implementations[False]['matmul'] = _motifs_gpu
+    motif_implementations[False]['gpu'] = _motifs_gpu
+except ImportError:
+    logger.info('Could not initiate GPU support, please install tensorflow or pytorch')
 
 
 def triad_patterns():
