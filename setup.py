@@ -7,7 +7,7 @@ requirements = ["numpy>=1.16.2", "pandas>=0.24.2", "networkx>=2.2", "scikit-lear
 
 setup(
     name="netsci",
-    version="0.0.2",
+    version="0.0.3",
     author="Eyal Gal, Idan Segev, Michael London",
     author_email="eyalgl@gmail.com",
     description="Analyzing Complex Networks with Python",
