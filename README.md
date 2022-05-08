@@ -37,6 +37,7 @@ nsv.bar_motifs(f)
 ```
 ![Alt text](examples/images/star4_motifs.png)
 
+## GPU speedup
 Using GPU for the motif counting is easy
 ```python
 from netsci.models.random import erdos_renyi
@@ -48,8 +49,8 @@ print(f_er)
 # [156453141   9481653     37283     95997     47667     48287      1001       843
 #        769       334         2         9         5         9         0         0]
 ```
-## GPU speedup
-The running-time speedup resulting from the GPU-based algorithm for analyzing motifs, as measured over several networks sizes (n) and sparsities (p)
+
+The running-time speedup resulting from the GPU-based implementation, as measured over several networks sizes (n) and sparsities (p), is depicted below
 ![](examples/images/gpu-speedup-times.Tesla-K80-Colab.(220508.122555).png)
 
 A full a live notebook for performing this benmarching is provided [below](#examples).
