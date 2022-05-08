@@ -39,7 +39,7 @@ def _motifs_gpu(A, dtype=tf.float64):
     transpose = tf.transpose
     A1t = transpose(A1)
 
-    logger.debug(f"devices: {[x.device.split('/')[-1] for x in [A, A0, A1, A2]]}")
+    logger.debug(f"Ax devices: {[x.device.split('/')[-1] for x in [A, A0, A1, A2]]}")
 
     f = [
         trace(A0 @ A0 @ A0) / 6,
@@ -66,7 +66,7 @@ def _motifs_gpu(A, dtype=tf.float64):
         
         trace(A2 @ A2 @ A2) / 6
     ]
-    logger.debug(f"devices: {[x.device.split('/')[-1] for x in f]}")
+    logger.debug(f"f devices: {[x.device.split('/')[-1] for x in f]}")
 
     f = np.array(f, dtype=int)
     return f

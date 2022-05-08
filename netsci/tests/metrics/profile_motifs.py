@@ -2,7 +2,7 @@ import time
 import numpy as np
 import numpy.testing as npt
 
-from netsci.metrics.motifs import *
+from netsci.metrics.motifs import _motifs_naive, _motifs, _motifs_with_participation
 
 np.set_printoptions(linewidth=160)
 
@@ -16,14 +16,14 @@ np.fill_diagonal(A,0)
 
 print("Motifs:")
 start = time.time()
-f = motifs(A)
+f = _motifs(A)
 end = time.time()
 print(f"\tElapsed time {end - start:.4f} seconds")
 print(f"\tf = {f}")
 
 print("Motifs (naive):")
 start = time.time()
-f_naive = motifs_naive(A)
+f_naive = _motifs_naive(A)
 end = time.time()
 print(f"\tElapsed time {end - start:.4f} seconds")
 print(f"\tf_naive = {f_naive}")
@@ -34,7 +34,7 @@ npt.assert_equal(f[3:], f_naive[3:], "Motif frequencies from optimized algorithm
 
 print("Motifs (with participation):")
 start = time.time()
-f_wp, participation = motifs_with_participation(A)
+f_wp, participation = _motifs_with_participation(A)
 end = time.time()
 print(f"\tElapsed time {end - start:4f} seconds")
 print(f"\tf_wp = {f_wp}")
