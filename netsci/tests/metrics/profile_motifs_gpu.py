@@ -1,58 +1,52 @@
 import logging; logging.basicConfig()
-import numpy as np
-import numpy.testing as npt
 
 import tensorflow as tf
 logging.getLogger('netsci.metrics.motifs_gpu').setLevel(logging.DEBUG)
 
 from netsci.models.random import erdos_renyi
 import netsci.metrics.motifs as nsm
-from netsci.metrics.motifs_gpu import _motifs_gpu
-
 from netsci.tests.profiler import Timer
 
+from tensorflow.python.client import device_lib
 
 
-A = erdos_renyi(n=1000, p=0.1, random_state=71070)
+print('devices:', {d.name: d.physical_device_desc 
+                   for d in device_lib.list_local_devices()})
 
 
-# with Timer(logger=print, desc='GPU') as t:
-#   with tf.device('/GPU:0'):
-#     print(nsm.motifs(A, algorithm='gpu'))
+A = erdos_renyi(n=2000, p=0.1, random_state=71070)
+print(f'A: {A.shape}, p = {nsm.sparsity(A):.4f}')
 
-# with Timer(logger=print, desc='CPU'):
-#   with tf.device('/CPU:0'):
-#     print(nsm.motifs(A, algorithm='gpu'))
-with Timer(logger=print, desc='GPU') as t:
-  with tf.device('/GPU:0'):
-    print(_motifs_gpu(A, dtype=tf.int64))
+configurations = [('matmul', 'GPU'), ('matmul', 'CPU'), ('louzoun', 'CPU')]
 
-with Timer(logger=print, desc='CPU'):
-  with tf.device('/CPU:0'):
-    print(_motifs_gpu(A, dtype=tf.int64))
+for algorithm, device in configurations:
+  with tf.device(f'/{device}:0'):
+    with Timer(logger=print, desc=f'{algorithm}:{device}'):
+      print(nsm.motifs(A, algorithm=algorithm))
 
 
-with Timer(logger=print):
-    print(nsm.motifs(A))
+"""Colab
+devices = {
+  '/device:CPU:0': '', 
+  '/device:GPU:0': 'device: 0, name: Tesla K80, pci bus id: 0000:00:04.0, compute capability: 3.7'
+}
 
+A: (2000, 2000), p = 0.1001
 
-# with Timer(logger=print, desc='brute-force'):
-#     print(nsm.motifs(A, algorithm='brute-force'))
+matmul:GPU took 0.680 sec.
+matmul:CPU took 18.909 sec.
+louzoun:CPU took 149.726 sec.
+"""
 
+"""MBP M1 Max
+devices: {
+  '/device:CPU:0': '', 
+  '/device:GPU:0': 'device: 0, name: METAL, pci bus id: <undefined>'
+}
 
-import pandas as pd
-times = pd.read_csv('/Users/eyalgal/Downloads/gpu-speedup-times.Tesla-K80-Colab.(220508.122555).csv',
- parse_dates=['timestamp'])
+A: (2000, 2000), p = 0.1001
 
-import seaborn as sns
-sns.relplot(x='n', y='computation_time', hue='p', col='device', data=times, 
-            kind='line', markers=True, style='device', dashes=False)
-
-
-speedup = times.groupby(['n', 'p', 'device', 'random_state'])['computation_time'].mean().unstack(['device']) \
-  .assign(speedup=lambda df: df['/CPU:0']/df['/GPU:0']).reset_index()
-
-sns.relplot(x='n', y='speedup', hue='p', data=speedup, 
-            kind='line', markers=True)
-
-    
+matmul:GPU took 1.943 sec.
+matmul:CPU took 1.868 sec.
+louzoun:CPU took 64.622 sec.
+"""
