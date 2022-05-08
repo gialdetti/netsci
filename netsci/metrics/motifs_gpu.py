@@ -18,28 +18,28 @@ except ImportError:
         raise ImportError('Could not initiate GPU support')
 
 
-def to_gpu(A):
+def to_gpu(A, dtype=tf.int64):
     # A = torch.from_numpy(A).int().to(device)
-    A = tf.constant(A, dtype=tf.int64)
+    A = tf.constant(A, dtype=dtype)
     return A
 
 
-def _motifs_gpu(A):
-    A = to_gpu(A)
+def _motifs_gpu(A, dtype=tf.float64):    
+    A = to_gpu(A, dtype=dtype)
 
-    A1 = tf.cast((A+tf.transpose(A)==1), tf.int64)*A
-    A2 = tf.cast((A+tf.transpose(A)==2), tf.int64)
+    A1 = tf.cast((A+tf.transpose(A)==1), dtype=dtype)*A
+    A2 = tf.cast((A+tf.transpose(A)==2), dtype=dtype)
     assert tf.reduce_sum(A) == tf.reduce_sum(A1) + tf.reduce_sum(A2)
 
-    A0 = tf.cast((A+tf.transpose(A)==0), tf.int64)
-    A0 = tf.linalg.set_diag(A0, tf.zeros(len(A), dtype=tf.int64))
+    A0 = tf.cast((A+tf.transpose(A)==0), dtype=dtype)
+    A0 = tf.linalg.set_diag(A0, tf.zeros(len(A), dtype=dtype))
     assert tf.reduce_sum(A0) + tf.reduce_sum(A1)*2 + tf.reduce_sum(A2) == len(A)*(len(A) - 1)
 
     trace = tf.linalg.trace
     transpose = tf.transpose
     A1t = transpose(A1)
 
-    # logger.debug(A.device, A0.device, A1.device, A2.device)
+    logger.debug(f"devices: {[x.device.split('/')[-1] for x in [A, A0, A1, A2]]}")
 
     f = [
         trace(A0 @ A0 @ A0) / 6,
@@ -66,6 +66,7 @@ def _motifs_gpu(A):
         
         trace(A2 @ A2 @ A2) / 6
     ]
+    logger.debug(f"devices: {[x.device.split('/')[-1] for x in f]}")
 
     f = np.array(f, dtype=int)
     return f
