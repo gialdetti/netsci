@@ -3,19 +3,15 @@ import numpy as np
 
 
 logger = logging.getLogger(__name__)
+gpu = False
 
 try:
     import tensorflow as tf
-    logger.info('Imported tensorflow for GPU support')
+    logger.info('Imported tensorflow for MatMul/GPU support')
+    gpu = len(tf.config.list_physical_devices('GPU')) > 0
 except ImportError:
-    logger.debug('Could not import tensorflow for GPU support')
-
-    try:
-        import torch
-    except ImportError:
-        logger.debug('Could not import torch for GPU support')
-
-        raise ImportError('Could not initiate GPU support')
+    logger.debug('Could not import tensorflow for MatMul/GPU support')
+    raise ImportError('Could not import tensorflow for MatMul/GPU support')
 
 
 def to_gpu(A, dtype=tf.int64):

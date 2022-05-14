@@ -1,5 +1,5 @@
 import logging; logging.basicConfig()
-logging.getLogger('netsci.metrics.motifs_gpu').setLevel(logging.DEBUG)
+logging.getLogger('netsci').setLevel(logging.DEBUG)
 
 import numpy as np
 import numpy.testing as npt
@@ -9,7 +9,7 @@ import netsci.metrics.motifs as nsm
 
 
 A = erdos_renyi(100, p=0.01)
-f = nsm.motifs(A, algorithm='gpu')
+f = nsm.motifs(A, algorithm='matmul')
 print(f"f (matmul) = {f}")
 
 f_expected = nsm.motifs(A)

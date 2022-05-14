@@ -187,17 +187,25 @@ def _motifs_with_participation(A):
     return f, participants
 
 
-motif_implementations = {
-    False: {'louzoun': _motifs, 'brute-force': _motifs_naive},
-    True: {'louzoun' : _motifs_with_participation}
-}
+def lookup_motif_implementations():
+    motif_implementations = {
+        False: {'louzoun': _motifs, 'brute-force': _motifs_naive},
+        True: {'louzoun' : _motifs_with_participation}
+    }
 
-try:
-    from .motifs_gpu import _motifs_gpu
-    motif_implementations[False]['matmul'] = _motifs_gpu
-    motif_implementations[False]['gpu'] = _motifs_gpu
-except ImportError:
-    logger.info('Could not initiate GPU support, please install tensorflow or pytorch')
+    try:
+        from . import motifs_gpu
+        motif_implementations[False]['matmul'] = motifs_gpu._motifs_gpu
+        if motifs_gpu.gpu:
+            motif_implementations[False]['gpu'] = motifs_gpu._motifs_gpu
+            logger.info('GPU support is available')
+    except ImportError:
+        logger.warning('Could not initiate MatMul/GPU support, please install tensorflow')
+
+    return motif_implementations
+
+
+motif_implementations = lookup_motif_implementations()
 
 
 def triad_patterns():
