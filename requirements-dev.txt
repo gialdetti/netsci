@@ -9,7 +9,7 @@ matplotlib==3.5.2
 seaborn==0.11.2
 
 # IDE
-notebook==6.4.11
+notebook==6.4.12
 ipywidgets==7.7.0
 
 # Testing
