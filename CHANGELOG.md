@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Data: Connectomics out-of-the-box dataset for L6_LBC cell type
 - Examples: GPU speedup of motif analysis
+- Visualization: Node
+- Maintenance: setup.py modes & pyproject.toml
 
 ## [0.0.3] - 2022-05-07
 * DOC: Update README file with nbviewer links
