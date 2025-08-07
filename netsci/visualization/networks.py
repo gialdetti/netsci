@@ -43,7 +43,7 @@ default_node_color = np.array([116, 95, 169])/255
 default_edge_color = np.array([84, 88, 87])/255
 
 
-def plot_directed_network(A=None, pos=None, title=None, labels=None,
+def plot_directed_network(A=None, pos=None, title=None, labels=None, s=200,
                           fig_kws=dict(figsize=(5, 5)), node_color=default_node_color, edge_color=default_edge_color):
     """
 
@@ -75,14 +75,15 @@ def plot_directed_network(A=None, pos=None, title=None, labels=None,
 
     colors = [node_color] * len(pos)
     plt.figure(**fig_kws)
-    plt.scatter(pos[:, 0], pos[:, 1], c=colors, s=200, alpha=1, zorder=10)
+    plt.scatter(pos[:, 0], pos[:, 1], c=colors, s=s, alpha=1, zorder=10)
     plt.axis('square')
     [plt.annotate('', xy=pos[i], xytext=pos[j],
                   arrowprops=dict(facecolor=edge_color, edgecolor=edge_color, arrowstyle='<|-, head_length=1, head_width=.4'))
      # arrowprops=dict(facecolor=arrow_color, edgecolor=arrow_color, shrink=0.07))
      for i, j in np.array(A.nonzero()).T]
-    labels = labels or range(len(A))
-    [plt.text(x, y, label, color='w', ha='center', va='center', zorder=20, fontsize=8)
-     for label, (x, y) in zip(labels, pos[:, :2])]
+    if labels!=False:
+        labels = labels or range(len(A))
+        [plt.text(x, y, label, color='w', ha='center', va='center', zorder=20, fontsize=8)
+         for label, (x, y) in zip(labels, pos[:, :2])]
     if title is not None:
         plt.title(title)
