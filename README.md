@@ -50,7 +50,7 @@ print(f_er)
 #        769       334         2         9         5         9         0         0]
 ```
 
-The running-time speedup resulting from the GPU-based implementation, as measured over several networks sizes (n) and sparsities (p), is depicted below
+The running-time speedup ratio resulting from the GPU-based implementation, as measured over several networks sizes (n) and sparsities (p), is depicted below
 ![](examples/images/gpu-speedup-times.Tesla-K80-Colab.(220508.122555).png)
 
 A full a live notebook for performing this benmarching is provided [below](#examples).
@@ -84,11 +84,11 @@ $ pytest
 
 ### Examples
 
-| Theme | MyBinder | Colab |
-| ----- | :------: | :---: |
-| [Basic network motifs demo](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) | |
+| Theme                                                                                                                                                      |                                                                          MyBinder                                                                           |                                                                                              Colab                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [Basic network motifs demo](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb)                                        |        [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb)        |                                                                                                                                                                                                 |
 | [Connectomics dataset, and 3-neuron motif embedding](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) |
-| Tech: [GPU speedup of motif analysis](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Ftech%2Fgpu_speedup.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb) |
+| Tech: [GPU speedup of motif analysis](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb)                            |      [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Ftech%2Fgpu_speedup.ipynb)      |       [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb)       |
 
 
 ### Communication
