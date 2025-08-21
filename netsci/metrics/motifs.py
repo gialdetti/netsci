@@ -1,4 +1,4 @@
-__author__ = 'gialdetti'
+__author__ = "gialdetti"
 
 import logging
 import itertools
@@ -7,8 +7,11 @@ from operator import itemgetter
 import numpy as np
 import networkx as nx
 
+from . import motifs_matmul
+
 
 logger = logging.getLogger(__name__)
+
 
 def sparsity(A):
     """The marginal probability for a connection
@@ -28,9 +31,9 @@ def sparsity(A):
     reciprocity
 
     """
-    assert len(A.shape)==2 and A.shape[0] == A.shape[1]
+    assert len(A.shape) == 2 and A.shape[0] == A.shape[1]
     n = A.shape[0]
-    return A.sum() / float(n*(n-1))
+    return A.sum() / float(n * (n - 1))
 
 
 def reciprocity(A):
@@ -51,12 +54,12 @@ def reciprocity(A):
     sparsity
 
     """
-    assert len(A.shape)==2 and A.shape[0] == A.shape[1]
+    assert len(A.shape) == 2 and A.shape[0] == A.shape[1]
     n = A.shape[0]
-    return (A+A.T == 2).sum() / float(n*(n-1))
+    return (A + A.T == 2).sum() / float(n * (n - 1))
 
 
-def motifs(A, algorithm='louzoun', participation=False):
+def motifs(A, algorithm="louzoun", participation=False):
     """Frequency of triplet motifs
 
     Parameters
@@ -69,7 +72,7 @@ def motifs(A, algorithm='louzoun', participation=False):
           but it counts all 16 triplets.
         * 'louzoun' - an efficient algorithm for sparse networks. The complexity is low (O(|E|)), but it counts only the 13
           connected triplets (the first 3 entries will be -1).
-        * `matmul` - a matrix multiplications computation of motifs. The complexity is (O(|V|^3)), but it is open to the low-level 
+        * `matmul` - a matrix multiplications computation of motifs. The complexity is (O(|V|^3)), but it is open to the low-level
           optimizations of the underlying library implementing the matrix multiplication (also it counts all 16 triplets).
         * `gpu` - same as `matmul` but performed on GPU for further optimization.
     participation : bool, default: False
@@ -103,34 +106,38 @@ def motifs(A, algorithm='louzoun', participation=False):
     try:
         return motif_implementations[participation][algorithm](A)
     except KeyError:
-        if not type(participation)==bool:
-            raise TypeError(f'participation must boolean')
-        raise ValueError(f'algorithm must be from {list(motif_implementations[participation].keys())}, got \'{algorithm}\'')
+        if not type(participation) == bool:
+            raise TypeError(f"participation must boolean")
+        raise ValueError(
+            f"algorithm must be from {list(motif_implementations[participation].keys())}, got '{algorithm}'"
+        )
 
 
 def _motifs_naive(A):
-    A = A+2*A.T
+    A = A + 2 * A.T
     tags = triad_classification_tree()
 
     f = np.zeros(16, dtype=int)
     n = A.shape[1]
     for i in range(0, n):
-        for j in range(i+1, n):
-            for k in range(j+1, n):
-                tag = tags[A[i,j], A[i,k], A[j,k]]
-                f[ tag ] += 1
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                tag = tags[A[i, j], A[i, k], A[j, k]]
+                f[tag] += 1
 
     return f
 
 
 def _motifs(A):
     assert not A.diagonal().any(), "Diagonal should be all zeros"
-    assert issubclass(A.dtype.type, np.integer), "Adjacency matrix should be a zero/one array"
+    assert issubclass(
+        A.dtype.type, np.integer
+    ), "Adjacency matrix should be a zero/one array"
     tags = triad_classification_tree()
     f = np.zeros(16, dtype=int)
 
     g = nx.Graph(A)
-    A = A + 2*A.T
+    A = A + 2 * A.T
     for u in list(g.nodes()):
         u_nbrs = list(g.neighbors(u))
         u_nbrs_set = set(u_nbrs)
@@ -138,9 +145,9 @@ def _motifs(A):
 
         for j in range(len(u_nbrs)):
             v = u_nbrs[j]
-            Auv = A[u,v]
+            Auv = A[u, v]
 
-            for k in range(j+1, len(u_nbrs)):
+            for k in range(j + 1, len(u_nbrs)):
                 w = u_nbrs[k]
                 f[tags[Auv, A[u, w], A[v, w]]] += 1
 
@@ -160,7 +167,7 @@ def _motifs_with_participation(A):
     participants = l = [[] for _ in range(16)]
 
     g = nx.Graph(A)
-    A = A + 2*A.T
+    A = A + 2 * A.T
     for u in list(g.nodes()):
         u_nbrs = list(g.neighbors(u))
         u_nbrs_set = set(u_nbrs)
@@ -168,19 +175,19 @@ def _motifs_with_participation(A):
 
         for j in range(len(u_nbrs)):
             v = u_nbrs[j]
-            Auv = A[u,v]
+            Auv = A[u, v]
 
-            for k in range(j+1, len(u_nbrs)):
+            for k in range(j + 1, len(u_nbrs)):
                 w = u_nbrs[k]
                 tag = tags[Auv, A[u, w], A[v, w]]
                 f[tag[0]] += 1
-                participants[tag[0]].append(itemgetter(*tag[1:])([u,v,w]))
+                participants[tag[0]].append(itemgetter(*tag[1:])([u, v, w]))
 
             v_nbrs = set(g.neighbors(v)) - u_nbrs_set
             for w in v_nbrs:
                 tag = tags[Auv, A[u, w], A[v, w]]
                 f[tag[0]] += 1
-                participants[tag[0]].append(itemgetter(*tag[1:])([u,v,w]))
+                participants[tag[0]].append(itemgetter(*tag[1:])([u, v, w]))
 
     f[0:3] = -1
     participants = [np.array(p, np.int64).tolist() for p in participants]
@@ -189,18 +196,32 @@ def _motifs_with_participation(A):
 
 def lookup_motif_implementations():
     motif_implementations = {
-        False: {'louzoun': _motifs, 'brute-force': _motifs_naive},
-        True: {'louzoun' : _motifs_with_participation}
+        False: {"louzoun": _motifs, "brute-force": _motifs_naive},
+        True: {"louzoun": _motifs_with_participation},
     }
 
-    try:
-        from . import motifs_gpu
-        motif_implementations[False]['matmul'] = motifs_gpu._motifs_gpu
-        if motifs_gpu.gpu:
-            motif_implementations[False]['gpu'] = motifs_gpu._motifs_gpu
-            logger.info('GPU support is available')
-    except ImportError:
-        logger.warning('Could not initiate MatMul/GPU support, please install tensorflow')
+    # MatMul & GPU
+
+    cpu_tensorian, gpu_tensorian = "numpy-cpu", None
+    if "torch-cpu" in motifs_matmul.tensorians:
+        cpu_tensorian = "torch-cpu"
+        if "torch-gpu" in motifs_matmul.tensorians:
+            gpu_tensorian = "torch-gpu"
+    elif "tensorflow-cpu" in motifs_matmul.tensorians:
+        cpu_tensorian = "tensorflow-cpu"
+        if "tensorflow-gpu" in motifs_matmul.tensorians:
+            gpu_tensorian = "tensorflow-gpu"
+
+    motif_implementations[False]["matmul"] = lambda A: motifs_matmul.motifs_matmul(
+        A, tensorian=cpu_tensorian
+    )
+    if gpu_tensorian is not None:
+        motif_implementations[False]["gpu"] = lambda A: motifs_matmul.motifs_matmul(
+            A, tensorian=gpu_tensorian
+        )
+        logger.info("GPU support is available")
+    else:
+        logger.info("Could not initiate GPU support")
 
     return motif_implementations
 
@@ -220,28 +241,28 @@ def triad_patterns():
     """
     patterns = [
         # No edge
-        np.array([[0,0,0], [0,0,0], [0,0,0]]),      #0
+        np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]),  # 0
         # One edge
-        np.array([[0,1,0], [0,0,0], [0,0,0]]),      #1
-        np.array([[0,1,0], [1,0,0], [0,0,0]]),      #2
+        np.array([[0, 1, 0], [0, 0, 0], [0, 0, 0]]),  # 1
+        np.array([[0, 1, 0], [1, 0, 0], [0, 0, 0]]),  # 2
         # Two edges
-        np.array([[0,1,0], [0,0,0], [1,0,0]]),      #4
-        np.array([[0,0,0], [1,0,0], [1,0,0]]),      #3
-        np.array([[0,1,1], [0,0,0], [0,0,0]]),      #5
+        np.array([[0, 1, 0], [0, 0, 0], [1, 0, 0]]),  # 4
+        np.array([[0, 0, 0], [1, 0, 0], [1, 0, 0]]),  # 3
+        np.array([[0, 1, 1], [0, 0, 0], [0, 0, 0]]),  # 5
         # Three edges
-        np.array([[0,1,1], [0,0,1], [0,0,0]]),      #7
-        np.array([[0,0,0], [0,0,1], [1,1,0]]),      #8
-        np.array([[0,1,0], [0,0,1], [0,1,0]]),      #6
-        np.array([[0,1,0], [0,0,1], [1,0,0]]),      #9
+        np.array([[0, 1, 1], [0, 0, 1], [0, 0, 0]]),  # 7
+        np.array([[0, 0, 0], [0, 0, 1], [1, 1, 0]]),  # 8
+        np.array([[0, 1, 0], [0, 0, 1], [0, 1, 0]]),  # 6
+        np.array([[0, 1, 0], [0, 0, 1], [1, 0, 0]]),  # 9
         # Four edges
-        np.array([[0,1,1], [1,0,0], [1,0,0]]),      #11
-        np.array([[0,1,0], [0,0,1], [1,1,0]]),      #12
-        np.array([[0,0,0], [1,0,1], [1,1,0]]),      #13
-        np.array([[0,1,1], [0,0,1], [0,1,0]]),      #10
+        np.array([[0, 1, 1], [1, 0, 0], [1, 0, 0]]),  # 11
+        np.array([[0, 1, 0], [0, 0, 1], [1, 1, 0]]),  # 12
+        np.array([[0, 0, 0], [1, 0, 1], [1, 1, 0]]),  # 13
+        np.array([[0, 1, 1], [0, 0, 1], [0, 1, 0]]),  # 10
         # Five edges
-        np.array([[0,1,1], [1,0,1], [1,0,0]]),      #14
+        np.array([[0, 1, 1], [1, 0, 1], [1, 0, 0]]),  # 14
         # Six edges
-        np.array([[0,1,1], [1,0,1], [1,1,0]])       #15
+        np.array([[0, 1, 1], [1, 0, 1], [1, 1, 0]]),  # 15
     ]
     return patterns
 
@@ -269,32 +290,32 @@ def triad_proba(p, r=None):
     if r is None:
         r = p**2
 
-    alpha = r-p**2
-    z = np.sqrt(1-alpha)-p
-    np.testing.assert_almost_equal(np.array(sum([z**2, z*p, z*p, r])), np.array([1]))
+    alpha = r - p**2
+    z = np.sqrt(1 - alpha) - p
+    np.testing.assert_almost_equal(
+        np.array(sum([z**2, z * p, z * p, r])), np.array([1])
+    )
 
-    mu = np.array([
-        z**6,                                       #0
-        2*3*z**5 * p,                               #1
-          3*z**4 *        r,                        #2
-
-        2*3*z**4 * p**2,                            #4
-          3*z**4 * p**2,                            #3  convergent
-          3*z**4 * p**2,                            #5  divergent
-
-        2*3*z**3 * p**3,                            #7  feed-forward loop
-        2*3*z**3 * p  *r,                           #8
-        2*3*z**3 * p    * r,                        #6
-        2*  z**3 * p**3,                            #9  feedback loop
-
-          3*z**2 *        r**2,                     #11
-        2*3*z**2 * p**2 * r,                        #12
-          3*z**2 * p**2 * r,                        #13
-          3*z**2 * p**2 * r,                        #10
-
-        2*3*z*p  *        r**2,                     #14
-                          r**3                      #15
-    ])
+    mu = np.array(
+        [
+            z**6,  # 0
+            2 * 3 * z**5 * p,  # 1
+            3 * z**4 * r,  # 2
+            2 * 3 * z**4 * p**2,  # 4
+            3 * z**4 * p**2,  # 3  convergent
+            3 * z**4 * p**2,  # 5  divergent
+            2 * 3 * z**3 * p**3,  # 7  feed-forward loop
+            2 * 3 * z**3 * p * r,  # 8
+            2 * 3 * z**3 * p * r,  # 6
+            2 * z**3 * p**3,  # 9  feedback loop
+            3 * z**2 * r**2,  # 11
+            2 * 3 * z**2 * p**2 * r,  # 12
+            3 * z**2 * p**2 * r,  # 13
+            3 * z**2 * p**2 * r,  # 10
+            2 * 3 * z * p * r**2,  # 14
+            r**3,  # 15
+        ]
+    )
     return mu
 
 
@@ -302,16 +323,17 @@ def triad_classification_tree():
     def permute(X, order):
         order = np.array(order)
         return np.array([row[order] for row in X[order]])
+
     motifs = triad_patterns()
 
-    tags = -1*np.ones(shape=(4,4,4), dtype=np.int64)
+    tags = -1 * np.ones(shape=(4, 4, 4), dtype=np.int64)
     permutations = list(itertools.permutations(range(3), 3))
     for i in range(len(motifs)):
         motif = motifs[i]
         for perm in permutations:
             isomporth = permute(motif, perm)
-            edges = isomporth + 2*isomporth.T
-            tags[edges[0,1], edges[0,2], edges[1,2]] = i
+            edges = isomporth + 2 * isomporth.T
+            tags[edges[0, 1], edges[0, 2], edges[1, 2]] = i
 
     return tags
 
@@ -320,17 +342,18 @@ def triad_classification_tree_with_participation():
     def permute(X, order):
         order = np.array(order)
         return np.array([row[order] for row in X[order]])
+
     motifs = triad_patterns()
 
-    tags = -1*np.ones(shape=(4,4,4,4), dtype=np.int64)
+    tags = -1 * np.ones(shape=(4, 4, 4, 4), dtype=np.int64)
     permutations = list(itertools.permutations(range(3), 3))
     permutations = [(p, np.argsort(p)) for p in permutations]
     for i in range(len(motifs)):
         motif = motifs[i]
         for perm, perm_inv in permutations:
             isomporth = permute(motif, perm)
-            edges = isomporth + 2*isomporth.T
-            tags[edges[0,1], edges[0,2], edges[1,2],:] = np.hstack([i, perm_inv])
+            edges = isomporth + 2 * isomporth.T
+            tags[edges[0, 1], edges[0, 2], edges[1, 2], :] = np.hstack([i, perm_inv])
 
     return tags
 
@@ -340,21 +363,30 @@ def triad_classification_tree_with_participation():
 # %timeit triads_classification_tree()
 
 
-
 # Compatibility with several conventions
-triad_order_bct = 3 + np.array([1, 0, 2, 5, 3, 4, 6, 10, 7, 8, 9, 11, 12])              # j.neuroimage.2009.10.003
-triad_order_egger2014 = 3 + np.array([12, 6, 11, 8, 9, 10, 3, 7, 0, 4, 5, 1, 2])        # fnana.2014.00129
-triad_order_nn4576 = 3 + np.arange(13)                                                  # nn.4576
+triad_order_bct = 3 + np.array(
+    [1, 0, 2, 5, 3, 4, 6, 10, 7, 8, 9, 11, 12]
+)  # j.neuroimage.2009.10.003
+triad_order_egger2014 = 3 + np.array(
+    [12, 6, 11, 8, 9, 10, 3, 7, 0, 4, 5, 1, 2]
+)  # fnana.2014.00129
+triad_order_nn4576 = 3 + np.arange(13)  # nn.4576
 
 
 def index_all(elements, array):
-    return np.array([np.where(array==x)[0][0] for x in elements])
+    return np.array([np.where(array == x)[0][0] for x in elements])
 
 
 conv_triad_order_nn4576_to_bct = index_all(triad_order_bct, triad_order_nn4576)
-assert np.array_equal(triad_order_nn4576[conv_triad_order_nn4576_to_bct], triad_order_bct)
-conv_triad_order_nn4576_to_egger2014 = index_all(triad_order_egger2014, triad_order_nn4576)
-assert np.array_equal(triad_order_nn4576[conv_triad_order_nn4576_to_egger2014], triad_order_egger2014)
+assert np.array_equal(
+    triad_order_nn4576[conv_triad_order_nn4576_to_bct], triad_order_bct
+)
+conv_triad_order_nn4576_to_egger2014 = index_all(
+    triad_order_egger2014, triad_order_nn4576
+)
+assert np.array_equal(
+    triad_order_nn4576[conv_triad_order_nn4576_to_egger2014], triad_order_egger2014
+)
 
 
 def identify_triad_node_roles():

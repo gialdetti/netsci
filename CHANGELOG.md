@@ -10,10 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples: GPU speedup of motif analysis
 - Visualization: Node
 - Maintenance: setup.py modes & pyproject.toml
+- FEAT: GPU support based on both pytorch and tensorflow
 
 ## [0.0.3] - 2022-05-07
-* DOC: Update README file with nbviewer links
-* API: GPU-based algorithm for motif analysis
+- DOC: Update README file with nbviewer links
+- API: GPU-based algorithm for motif analysis
 
 ## [0.0.2] - 2020-01-22
 ### Added

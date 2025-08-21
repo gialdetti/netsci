@@ -3,11 +3,19 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
 
-base_packages = ["numpy>=1.16.2", "pandas>=0.24.2", "networkx>=2.2", "scikit-learn"]
+base_packages = [
+    "numpy>=2.2.6",
+    "pandas>=2.3.1",
+    "networkx>=2.2",
+    "scikit-learn",
+    "matplotlib",
+    "seaborn",
+]
 docs_packages = ["black"]
-test_packages = ["pytest", "ipython"]
+test_packages = ["pytest", "tox", "ipython"]
 dev_packages = (
-    ["notebook", "ipywidgets", "matplotlib", "seaborn", "altair", "themes"]
+    ["notebook", "ipywidgets", "altair", "themes"]
+    + ["tqdm"]
     + docs_packages
     + test_packages
 )
@@ -15,7 +23,7 @@ dev_packages = (
 
 setup(
     name="netsci",
-    version="0.0.3",
+    version="0.0.4",
     author="Eyal Gal, Idan Segev, Michael London",
     author_email="eyalgl@gmail.com",
     description="Analyzing Complex Networks with Python",
