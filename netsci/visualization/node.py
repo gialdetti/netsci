@@ -76,8 +76,8 @@ def ioplot(
 
         # plt.axis('equal')
         plt.gca().set_aspect("equal", "box")
-        plt.xlabel("$\Delta$" + "xyz"[x])
-        plt.ylabel("$\Delta$" + "xyz"[y])
+        plt.xlabel("$\\Delta$" + "xyz"[x])
+        plt.ylabel("$\\Delta$" + "xyz"[y])
     else:
         ax = fig.add_subplot(projection="3d")
         # ax.view_init(elev=90, azim=-90)  # x,y
