@@ -6,11 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.0.4] - 2025-08-24
 - Data: Connectomics out-of-the-box dataset for L6_LBC cell type
 - Examples: GPU speedup of motif analysis
 - Visualization: Node
 - Maintenance: setup.py modes & pyproject.toml
 - API: GPU support based on both pytorch and tensorflow
+- Testing: tox testing for multiple environments
 
 ## [0.0.3] - 2022-05-07
 - DOC: Update README file with nbviewer links
@@ -30,7 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples: Interactive example for motif analysis, **"Basic network motifs demo"**
 - DOC: README file
 
-[unreleased]: https://github.com/gialdetti/netsci/compare/v0.0.3...HEAD
+[unreleased]: https://github.com/gialdetti/netsci/compare/v0.0.4...HEAD
+[0.0.4]: https://github.com/gialdetti/netsci/compare/v0.0.4...v0.0.3
 [0.0.3]: https://github.com/gialdetti/netsci/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/gialdetti/netsci/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/gialdetti/netsci/compare/66d620b...v0.0.1
