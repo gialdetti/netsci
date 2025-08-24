@@ -8,16 +8,16 @@ default_triad_order = triad_order_nn4576
 
 def bar_motifs(bar, line=None, order=None, title=None):
     if order is None:
-        order = range(len(bar)) if bar[0]>-1 else default_triad_order
+        order = range(len(bar)) if bar[0] > -1 else default_triad_order
 
     x = 1 + np.arange(len(order))
 
     plt.figure()
     gs = gridspec.GridSpec(2, 1, height_ratios=[10, 3])
     ax0 = plt.subplot(gs[0])
-    ax0.bar(x, bar[order])
+    ax0.bar(x, bar[order], alpha=0.9)
     if line is not None:
-        ax0.plot(x, line[order], '-oy')
+        ax0.plot(x, line[order], "-oy")
     print(x)
     plt.xticks(x)
     if title is not None:
@@ -25,17 +25,33 @@ def bar_motifs(bar, line=None, order=None, title=None):
 
     ax1 = plt.subplot(gs[1], sharex=ax0)
     plot_all_triads(order, ax=ax1, label=False)
-    plt.axis('off')
+    plt.axis("off")
 
     return [ax0, ax1]
 
 
-def plot_a_triad(tid, o=(0, 0), r=1, phi=np.pi / 2, label=True,
-                 arrow_color=None, head_width=0.10,
-                 nodes=True, node_color=None, node_size=12, node_alpha=.5,
-                 bg_color=None, ax=None):
+def plot_a_triad(
+    tid,
+    o=(0, 0),
+    r=1,
+    phi=np.pi / 2,
+    label=True,
+    arrow_color=None,
+    head_width=0.10,
+    nodes=True,
+    node_color=None,
+    node_size=12,
+    node_alpha=0.5,
+    bg_color=None,
+    ax=None,
+):
     motif = triad_patterns()[tid] if np.isscalar(tid) else tid
-    xy = o+r*np.array([[np.cos(-2*np.pi*a+phi), np.sin(-2*np.pi*a+phi)] for a in np.arange(3)/3.0])
+    xy = o + r * np.array(
+        [
+            [np.cos(-2 * np.pi * a + phi), np.sin(-2 * np.pi * a + phi)]
+            for a in np.arange(3) / 3.0
+        ]
+    )
 
     scale = 0.75
 
@@ -47,14 +63,30 @@ def plot_a_triad(tid, o=(0, 0), r=1, phi=np.pi / 2, label=True,
     if nodes:
         ax.scatter(xy.T[0], xy.T[1], color=node_color, s=node_size, alpha=node_alpha)
 
-    h = [ax.arrow(xy[i,0], xy[i,1],
-                  scale*(xy[j,0]-xy[i,0]), scale*(xy[j,1]-xy[i,1]),
-                  head_width=head_width, color=arrow_color, fc=arrow_color, ec=arrow_color)
-         for (i, j) in zip(*motif.nonzero())]
+    h = [
+        ax.arrow(
+            xy[i, 0],
+            xy[i, 1],
+            scale * (xy[j, 0] - xy[i, 0]),
+            scale * (xy[j, 1] - xy[i, 1]),
+            head_width=head_width,
+            color=arrow_color,
+            fc=arrow_color,
+            ec=arrow_color,
+        )
+        for (i, j) in zip(*motif.nonzero())
+    ]
     if label is not False:
         if label is True:
             label = tid
-        ax.text(o[0], o[1], "%s" % label, horizontalalignment="center", verticalalignment="center", fontsize=8)
+        ax.text(
+            o[0],
+            o[1],
+            "%s" % label,
+            horizontalalignment="center",
+            verticalalignment="center",
+            fontsize=8,
+        )
 
     if bg_color:
         bg = plt.Polygon(xy, color=bg_color)
@@ -64,9 +96,14 @@ def plot_a_triad(tid, o=(0, 0), r=1, phi=np.pi / 2, label=True,
 
 
 # TODO: check https://stackoverflow.com/questions/8733558/how-can-i-make-the-xtick-labels-of-a-plot-be-simple-drawings-using-matplotlib
-def plot_all_triads(order=default_triad_order, o=(1, 0), delta=(1, 0), r=.4, **kwargs):
-    [plot_a_triad(order[i], o=np.array(o) + np.array([i * delta[0], np.mod(i, 2) * delta[1]]), r=r, **kwargs) for i in range(len(order))]
-    plt.axis('equal')
-
-
-
+def plot_all_triads(order=default_triad_order, o=(1, 0), delta=(1, 0), r=0.4, **kwargs):
+    [
+        plot_a_triad(
+            order[i],
+            o=np.array(o) + np.array([i * delta[0], np.mod(i, 2) * delta[1]]),
+            r=r,
+            **kwargs
+        )
+        for i in range(len(order))
+    ]
+    plt.axis("equal")

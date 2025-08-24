@@ -42,16 +42,21 @@ Using GPU for the motif counting is easy
 ```python
 from netsci.models.random import erdos_renyi
 
-A_er = erdos_renyi(n=1000, p=0.01, random_state=71070)    # Create an Erdős–Rényi network
-f_er = nsm.motifs(A_er, algorithm='gpu')                  # Count motifs using a GPU
+# Create an Erdős–Rényi network, and count motifs using a GPU
+A_er = erdos_renyi(n=500, p=0.2, random_state=71070)  
+f_er = nsm.motifs(A_er, algorithm="gpu")
 
+# Visualize
 print(f_er)
-# [156453141   9481653     37283     95997     47667     48287      1001       843
-#        769       334         2         9         5         9         0         0]
+# [5447433 8132356 1031546 2023563 1011703 1011109  503098  512458
+#   513352  167427   64844  127751   64442   63548   32483    1387]
+nsv.bar_motifs(f_er)
 ```
+![](examples/images/er_motifs.png)
 
 The running-time speedup ratio resulting from the GPU-based implementation, as measured over several networks sizes (n) and sparsities (p), is depicted below
-![](examples/images/gpu-speedup-times.Tesla-K80-Colab.(220508.122555).png)
+
+![](examples/images/gpu-speedup-times.TeslaT4.(250821.205715).png)
 
 A full a live notebook for performing this benmarching is provided [below](#examples).
 
