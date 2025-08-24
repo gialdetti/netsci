@@ -2,8 +2,8 @@
 Analyzing Complex Networks with Python
 
 
-|  Author   |                                        Version                                        |                                                                     Demo                                                                      |
-| :-------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: |
+| Author | Version | Demo |
+| :-: | :-: | :-: |
 | Gialdetti | [![PyPI](https://img.shields.io/pypi/v/netsci.svg)](https://pypi.org/project/netsci/) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) |
 
 
@@ -63,25 +63,25 @@ A full a live notebook for performing this benmarching is provided [below](#exam
 ## Installation
 ### Install latest release version via [pip](https://pip.pypa.io/en/stable/quickstart/)
 ```bash
-$ pip install netsci
+pip install netsci
 ```
 
 ### Install latest development version
 via pip
 ```bash
-$ pip install git+https://github.com/gialdetti/netsci.git
+pip install git+https://github.com/gialdetti/netsci.git
 ``` 
-or in development mode
+or, in development mode
 ```bash
-$ git clone https://github.com/gialdetti/netsci.git
-$ cd netsci
-$ pip install -e .[dev]
+git clone https://github.com/gialdetti/netsci.git
+cd netsci
+pip install -e .[dev]
 ```
 
-## Testing
+### Testing
 After installation, you can launch the test suite:
 ```bash
-$ pytest
+pytest
 ```
 
 
@@ -89,11 +89,11 @@ $ pytest
 
 ### Examples
 
-| Theme                                                                                                                                                      |                                                                          MyBinder                                                                           |                                                                                              Colab                                                                                              |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [Basic network motifs demo](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb)                                        |        [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb)        |                                                                                                                                                                                                 |
+| Theme | MyBinder | Colab |
+| --- | :-: | :-: |
+| [Basic network motifs demo](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fnetwork_motifs.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/network_motifs.ipynb)|
 | [Connectomics dataset, and 3-neuron motif embedding](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Fconnectomics_motif_embedding.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/connectomics_motif_embedding.ipynb) |
-| Tech: [GPU speedup of motif analysis](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb)                            |      [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Ftech%2Fgpu_speedup.ipynb)      |       [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb)       |
+| Tech: [GPU speedup of motif analysis](https://nbviewer.org/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/gialdetti/netsci/master?filepath=examples%2Ftech%2Fgpu_speedup.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/gialdetti/netsci/blob/master/examples/tech/gpu_speedup.ipynb) |
 
 
 ### Communication
