@@ -75,7 +75,7 @@ or in development mode
 ```bash
 $ git clone https://github.com/gialdetti/netsci.git
 $ cd netsci
-$ pip install -e .
+$ pip install -e .[dev]
 ```
 
 ## Testing

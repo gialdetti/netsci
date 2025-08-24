@@ -101,9 +101,9 @@ def ioplot(
             s=s,
             c=[sns.color_palette(post_cmap, 3)[-1]],
         )
-        ax.set_xlabel("$\Delta$x")
-        ax.set_ylabel("$\Delta$y")
-        ax.set_zlabel("$\Delta$z")
+        ax.set_xlabel("$\\Delta$x")
+        ax.set_ylabel("$\\Delta$y")
+        ax.set_zlabel("$\\Delta$z")
         # ax.set_yticklabels([])
 
     plt.title("%d samples (out of %s nodes)" % (samples, len(coords)))
